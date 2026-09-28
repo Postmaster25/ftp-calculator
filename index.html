@@ -290,10 +290,10 @@
 
 <script>
   const presets = [
-    { label: "Non-elite male", sub: "25w / 60s / 75%", step: 25, dur: 60, ftp: 75 },
-    { label: "Female",          sub: "15w / 60s / 75%", step: 15, dur: 60, ftp: 75 },
-    { label: "Elite male",      sub: "20w / 60s / 75%", step: 20, dur: 60, ftp: 75 },
-    { label: "GP Lama variant", sub: "25w / 150s / 82%", step: 25, dur: 150, ftp: 82 },
+    { label: "Non-elite male", sub: "25w / 60s / 75%", step: 25, dur: 60, ftp: 75, warmup: 10 },
+    { label: "Female",          sub: "15w / 60s / 75%", step: 15, dur: 60, ftp: 75, warmup: 10 },
+    { label: "Elite male",      sub: "20w / 60s / 75%", step: 20, dur: 60, ftp: 75, warmup: 5 },
+    { label: "GP Lama variant", sub: "25w / 150s / 82%", step: 25, dur: 150, ftp: 82, warmup: 10 },
   ];
 
   const el = id => document.getElementById(id);
@@ -301,6 +301,7 @@
   const stepDurationEl = el("stepDuration");
   const stepSizeEl = el("stepSize");
   const ftpPctEl = el("ftpPct");
+  const warmupEl = el("warmup");
   const presetsEl = el("presets");
 
   function renderPresets() {
@@ -313,6 +314,7 @@
         stepSizeEl.value = p.step;
         stepDurationEl.value = p.dur;
         ftpPctEl.value = p.ftp;
+        warmupEl.value = p.warmup;
         markActivePreset();
       });
       btn.dataset.idx = i;
