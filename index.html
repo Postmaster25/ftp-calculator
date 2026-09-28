@@ -206,7 +206,7 @@
           </div>
           <div class="field">
             <label>Step size <span class="hint">watt</span></label>
-            <input type="number" id="stepSize" value="25" inputmode="numeric">
+            <input type="number" id="stepSize" value="15" inputmode="numeric">
           </div>
           <div class="field">
             <label>First step <span class="hint">watt</span></label>
@@ -214,7 +214,7 @@
           </div>
           <div class="field">
             <label>Warm-up <span class="hint">min</span></label>
-            <input type="number" id="warmup" value="10" inputmode="numeric">
+            <input type="number" id="warmup" value="5" inputmode="numeric">
           </div>
         </div>
         <div class="field" style="margin-top:12px">
@@ -244,8 +244,8 @@
     <div class="field">
       <label>Weight <span class="hint">(optional, for w/kg)</span></label>
       <div class="input-row">
-        <input type="number" id="weight" placeholder="e.g. 70" inputmode="decimal">
-        <span class="unit">kg</span>
+        <input type="number" id="weight" placeholder="e.g. 154" inputmode="decimal">
+        <span class="unit">lbs</span>
       </div>
     </div>
     <button class="calc" id="calcBtn">Calculate</button>
@@ -290,7 +290,7 @@
 
 <script>
   const presets = [
-    { label: "Non-elite male", sub: "25w / 60s / 75%", step: 25, dur: 60, ftp: 75, warmup: 10 },
+    { label: "Non-elite male", sub: "15w / 60s / 75%", step: 15, dur: 60, ftp: 75, warmup: 5 },
     { label: "Female",          sub: "15w / 60s / 75%", step: 15, dur: 60, ftp: 75, warmup: 10 },
     { label: "Elite male",      sub: "20w / 60s / 75%", step: 20, dur: 60, ftp: 75, warmup: 5 },
     { label: "GP Lama variant", sub: "25w / 150s / 82%", step: 25, dur: 150, ftp: 82, warmup: 10 },
@@ -356,7 +356,8 @@
 
     const lastStage = Number(el("lastStage").value) || 0;
     const unfinished = Number(el("unfinishedDuration").value) || 0;
-    const weight = Number(el("weight").value) || 0;
+    const weightLbs = Number(el("weight").value) || 0;
+    const weightKg = weightLbs * 0.45359237;
 
     // Mirrors zwifthacks.com's calculator exactly (reverse-engineered from its bundle):
     // MAP is rounded to a whole watt first, and everything downstream is derived from
@@ -376,9 +377,9 @@
 
     const wkgTile = el("wkgTile");
     const vo2kgTile = el("vo2kgTile");
-    if (weight > 0) {
-      el("rWkg").textContent = round(ftpFraction / weight, 1);
-      el("rVo2Kg").textContent = round((vo2Lmin * 1000) / weight, 1);
+    if (weightKg > 0) {
+      el("rWkg").textContent = round(ftpFraction / weightKg, 1);
+      el("rVo2Kg").textContent = round((vo2Lmin * 1000) / weightKg, 1);
       wkgTile.style.display = "";
       vo2kgTile.style.display = "";
     } else {
